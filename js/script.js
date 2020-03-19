@@ -111,4 +111,91 @@ window.addEventListener('DOMContentLoaded', function () {
             document.body.style.overflow = 'hidden';
         }
     });
+
+    // form
+
+    let message = {
+        loading: 'Загрузка...',
+        success: 'Спасибо! Скоро мы с ввами свяжемся!',
+        failure: 'Что-то пошло не так...'
+    };
+
+    let form = document.querySelector('.main-form'),
+        input = form.getElementsByTagName('input'),
+        statusMesage = document.createElement('div');
+
+    statusMesage.classList.add('status');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        form.appendChild(statusMesage);
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        let formData = new FormData(form);
+
+        let obj = {};
+        formData.forEach(function (value, key) {
+            obj[key] = value;
+        });
+        
+        let json = JSON.stringify(obj);
+
+        request.send(json);
+
+        request.addEventListener('readystatechange', function () {
+            if (request.readyState < 4) {
+                statusMesage.innerHTML = message.loading;
+            } else if (request.readyState === 4 && request.status == 200) {
+                statusMesage.innerHTML = message.success;
+            } else {
+                statusMesage.innerHTML = message.failure;
+            }
+        });
+
+        for (let i = 0; i < input.length; i++) {
+            input[i].value = '';
+        }
+    });
+
+    // contact form
+
+    let contactForm = document.getElementById('form'),
+        contactInput = contactForm.getElementsByTagName('input');
+
+    contactForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        contactForm.appendChild(statusMesage);
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        let formData = new FormData(contactForm);
+
+        let obj = {}; 
+        formData.forEach(function (value, key) {
+            obj[key] = value;
+        });
+
+        let json = JSON.stringify(obj);
+
+        request.send(json);
+
+        request.addEventListener('readystatechange', function () {
+            if (request.readyState < 4) {
+                statusMesage.innerHTML = message.loading;
+            } else if (request.readyState === 4 && request.status == 200) {
+                statusMesage.innerHTML = message.success;
+            } else {
+                statusMesage.innerHTML = message.failure;
+            }
+        });
+        
+        for (let i = 0; i < contactInput.length; i++) {
+            contactInput[i].value = '';
+        }
+    });
 });
