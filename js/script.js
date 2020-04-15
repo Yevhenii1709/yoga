@@ -274,8 +274,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
     // Calc
 
-    let person = document.querySelectorAll('counter-block-option')[0],
-        restDays = document.querySelectorAll('counter-block-option')[1],
+    let person = document.querySelectorAll('.counter-block-input')[0],
+        restDays = document.querySelectorAll('.counter-block-input')[1],
         plase = document.getElementById('select'),
         totalValue = document.getElementById('total'),
         personSum = 0,
@@ -288,10 +288,10 @@ window.addEventListener('DOMContentLoaded', function () {
         personSum = +this.value;
         total = (daysSum + personSum) * 4000;
 
-        if (readyState.value == '') {
+        if (restDays.value == '' || person.value == '') {
             totalValue.innerHTML = 0;
         } else {
-            totalValue.innerHTML = total;   
+            totalValue.innerHTML = total;
         }
     });
 
@@ -299,14 +299,19 @@ window.addEventListener('DOMContentLoaded', function () {
         daysSum = +this.value;
         total = (daysSum + personSum) * 4000;
 
-        if (person.value == '') {
+        if (person.value == '' || restDays.value == '') {
             totalValue.innerHTML = 0;
         } else {
-            totalValue.innerHTML = total;   
+            totalValue.innerHTML = total;
         }
     });
 
-    plase.addEventListener('change', function() {
-        
+    plase.addEventListener('change', function () {
+        if (restDays.value == '' || person.value == '') {
+            totalValue.innerHTML = 0;
+        } else {
+            let a = total;
+            totalValue.innerHTML = a * this.options[this.selectedIndex].value;
+        }
     });
 });
