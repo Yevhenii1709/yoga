@@ -18,7 +18,7 @@
   "homepage": "https://github.com/Yevhenii1709/yoga#readme",
   "devDependencies": {
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {}
 }
